@@ -1,14 +1,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CustomButton } from "../components/CustomButton";
-
-// Define the status enum
-const StatusEnum = {
-  POOR: { value: "0", label: "Poor" },
-  GOOD: { value: "1", label: "Good" },
-  SATISFACTORY: { value: "2", label: "Satisfactory" },
-  EXCELLENT: { value: "3", label: "Excellent" },
-};
+import { Select, MenuItem } from "@mui/material";
+import { StatusEnum } from "./utils";
 
 export const FeedbackPage = () => {
   const [courses, setCourses] = useState([]);
@@ -102,17 +96,18 @@ export const FeedbackPage = () => {
         }}
       >
         <label style={{ marginBottom: "10px" }}>Select a course:</label>
-        <select
+        <Select
           value={selectedCourse}
+          style={{ width: 300 }}
           onChange={(e) => setSelectedCourse(e.target.value)}
         >
-          <option value="">Select a course</option>
+          <MenuItem value="">Select a course</MenuItem>
           {courses.map((course) => (
-            <option key={course.course_id} value={course.course_id}>
+            <MenuItem key={course.course_id} value={course.course_id}>
               {course.course_name}
-            </option>
+            </MenuItem>
           ))}
-        </select>
+        </Select>
       </div>
       {questions.length > 0 && (
         <div

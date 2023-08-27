@@ -1,17 +1,16 @@
-// Button.js
 import React from "react";
+import Button from "@mui/material/Button";
 
 export const CustomButton = ({ onClick, children, disabled, style }) => {
   return (
-    <button
+    <Button
       onClick={onClick}
       disabled={disabled}
+      variant="contained"
       style={{
-        padding: "10px 20px",
         marginTop: "20px",
         backgroundColor: disabled ? "#ccc" : "#007bff",
         color: "white",
-        border: "none",
         borderRadius: "5px",
         cursor: "pointer",
         width: "100%",
@@ -19,6 +18,8 @@ export const CustomButton = ({ onClick, children, disabled, style }) => {
       }}
     >
       {children}
-    </button>
+    </Button>
   );
 };
+
+export default CustomButton;

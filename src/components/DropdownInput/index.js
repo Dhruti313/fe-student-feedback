@@ -1,24 +1,27 @@
-// DropdownInput.js
 import React from "react";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 export const DropdownInput = ({ options, value, onChange }) => {
   return (
-    <select
+    <Select
       value={value}
       onChange={onChange}
+      variant="outlined"
       style={{
         padding: "10px",
         margin: "5px",
         borderRadius: "5px",
-        border: "1px solid #ccc",
         width: "220px",
       }}
     >
       {options.map((option) => (
-        <option key={option.value} value={option.value}>
+        <MenuItem key={option.value} value={option.value}>
           {option.label}
-        </option>
+        </MenuItem>
       ))}
-    </select>
+    </Select>
   );
 };
+
+export default DropdownInput;
