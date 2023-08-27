@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { CustomButton } from "../components/CustomButton";
-import { Select, MenuItem } from "@mui/material";
+import { Select, MenuItem, Typography, Card } from "@mui/material";
 import { StatusEnum } from "./utils";
 
 export const FeedbackPage = () => {
@@ -84,37 +84,53 @@ export const FeedbackPage = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
+        background: "#f0f0f0",
       }}
     >
-      <h1>Course Details</h1>
       <div
         style={{
-          marginBottom: "20px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
+          position: "fixed",
+          top: 0,
+          left: 0,
+          right: 0,
+          padding: "20px",
+          background: "#ffffff",
+          boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
         }}
       >
-        <label style={{ marginBottom: "10px" }}>Select a course:</label>
-        <Select
-          value={selectedCourse}
-          style={{ width: 300 }}
-          onChange={(e) => setSelectedCourse(e.target.value)}
-        >
-          <MenuItem value="">Select a course</MenuItem>
-          {courses.map((course) => (
-            <MenuItem key={course.course_id} value={course.course_id}>
-              {course.course_name}
-            </MenuItem>
-          ))}
-        </Select>
-      </div>
-      {questions.length > 0 && (
+        <Typography variant="h4">Course Details</Typography>
         <div
           style={{
+            marginBottom: "20px",
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
+          }}
+        >
+          <Typography variant="body1" style={{ marginBottom: "10px" }}>
+            Select a course:
+          </Typography>
+          <Select
+            value={selectedCourse}
+            style={{ width: 200 }}
+            onChange={(e) => setSelectedCourse(e.target.value)}
+          >
+            <MenuItem value="">Select a course</MenuItem>
+            {courses.map((course) => (
+              <MenuItem key={course.course_id} value={course.course_id}>
+                {course.course_name}
+              </MenuItem>
+            ))}
+          </Select>
+        </div>
+      </div>
+      {questions.length > 0 && (
+        <Card
+          style={{
+            padding: "20px",
+            width: "80%",
+            maxWidth: "800px",
+            marginTop: "100px",
           }}
         >
           {questions.map((question, index) => (
@@ -126,7 +142,7 @@ export const FeedbackPage = () => {
                 textAlign: "center",
               }}
             >
-              {question.question}
+              <Typography variant="h6">{question.question}</Typography>
               <div
                 style={{
                   marginTop: "10px",
@@ -171,7 +187,7 @@ export const FeedbackPage = () => {
           >
             Submit Feedback
           </CustomButton>
-        </div>
+        </Card>
       )}
     </div>
   );
