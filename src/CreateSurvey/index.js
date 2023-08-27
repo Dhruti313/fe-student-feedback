@@ -14,6 +14,7 @@ import {
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useNavigate } from "react-router-dom";
+import Navbar from "../Navbar"; // Import the Navbar component
 
 export const CreateSurvey = () => {
   const [courseName, setCourseName] = useState("");
@@ -92,87 +93,89 @@ export const CreateSurvey = () => {
   };
 
   return (
-    <div className="container">
-      <Card className="card">
-        <CardContent>
-          <Typography variant="h4">Create Survey</Typography>
-          <FormControl fullWidth style={{ margin: "10px 0" }}>
-            <InputLabel>Course Name</InputLabel>
-            <Select
-              value={courseName}
-              onChange={(e) => setCourseName(e.target.value)}
-            >
-              {courses.map((course) => (
-                <MenuItem key={course.course_id} value={course}>
-                  {course.course_name}
-                </MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <DatePicker
-            selected={startTime}
-            onChange={(date) => setStartTime(date)}
-            dateFormat="MMMM d, yyyy"
-            placeholderText="Start Time"
-            className="form-control"
-            style={{ margin: "10px 0", width: "100%" }}
-          />
-          <DatePicker
-            selected={endTime}
-            onChange={(date) => setEndTime(date)}
-            dateFormat="MMMM d, yyyy"
-            placeholderText="End Time"
-            className="form-control"
-            style={{ margin: "10px 0", width: "100%" }}
-          />
-          <div style={{ margin: "10px 0" }}>
-            <Typography variant="h6">Questions:</Typography>
-            {questions.map((q, index) => (
-              <div
-                key={index}
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  marginBottom: 5,
-                }}
+    <>
+      <div className="container">
+        <Card className="card">
+          <CardContent>
+            <Typography variant="h4">Create Survey</Typography>
+            <FormControl fullWidth style={{ margin: "10px 0" }}>
+              <InputLabel>Course Name</InputLabel>
+              <Select
+                value={courseName}
+                onChange={(e) => setCourseName(e.target.value)}
               >
-                <Typography style={{ flex: 1 }}>{q}</Typography>
+                {courses.map((course) => (
+                  <MenuItem key={course.course_id} value={course}>
+                    {course.course_name}
+                  </MenuItem>
+                ))}
+              </Select>
+            </FormControl>
+            <DatePicker
+              selected={startTime}
+              onChange={(date) => setStartTime(date)}
+              dateFormat="MMMM d, yyyy"
+              placeholderText="Start Time"
+              className="form-control"
+              style={{ margin: "10px 0", width: "100%" }}
+            />
+            <DatePicker
+              selected={endTime}
+              onChange={(date) => setEndTime(date)}
+              dateFormat="MMMM d, yyyy"
+              placeholderText="End Time"
+              className="form-control"
+              style={{ margin: "10px 0", width: "100%" }}
+            />
+            <div style={{ margin: "10px 0" }}>
+              <Typography variant="h6">Questions:</Typography>
+              {questions.map((q, index) => (
+                <div
+                  key={index}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    marginBottom: 5,
+                  }}
+                >
+                  <Typography style={{ flex: 1 }}>{q}</Typography>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    onClick={() => handleDeleteQuestion(index)}
+                  >
+                    Delete
+                  </Button>
+                </div>
+              ))}
+              <div style={{ display: "flex", marginTop: "10px" }}>
+                <TextField
+                  label="New Question"
+                  fullWidth
+                  value={newQuestion}
+                  onChange={(e) => setNewQuestion(e.target.value)}
+                />
                 <Button
                   variant="outlined"
-                  color="secondary"
-                  onClick={() => handleDeleteQuestion(index)}
+                  style={{ marginLeft: "10px" }}
+                  onClick={handleAddQuestion}
                 >
-                  Delete
+                  Add Question
                 </Button>
               </div>
-            ))}
-            <div style={{ display: "flex", marginTop: "10px" }}>
-              <TextField
-                label="New Question"
-                fullWidth
-                value={newQuestion}
-                onChange={(e) => setNewQuestion(e.target.value)}
-              />
-              <Button
-                variant="outlined"
-                style={{ marginLeft: "10px" }}
-                onClick={handleAddQuestion}
-              >
-                Add Question
-              </Button>
             </div>
-          </div>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={handleCreateSurvey}
-            disabled={questions.length === 0}
-            style={{ marginTop: "20px" }}
-          >
-            Create Survey
-          </Button>
-        </CardContent>
-      </Card>
-    </div>
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCreateSurvey}
+              disabled={questions.length === 0}
+              style={{ marginTop: "20px" }}
+            >
+              Create Survey
+            </Button>
+          </CardContent>
+        </Card>
+      </div>
+    </>
   );
 };

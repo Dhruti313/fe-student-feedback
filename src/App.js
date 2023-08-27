@@ -8,17 +8,20 @@ import "@fontsource/roboto/400.css";
 import "@fontsource/roboto/500.css";
 import "@fontsource/roboto/700.css";
 import { CreateSurvey } from "./CreateSurvey";
-
+import Navbar from "./Navbar";
 const App = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/feedback" element={<FeedbackPage />} />
-        <Route path="/feedbackStatus" element={<FeedbackStatus />} />
-        <Route path="/feedbackQuestion" element={<CreateSurvey />} />
-      </Routes>
-    </Router>
+    <>
+      <Router>
+        <Navbar />
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/feedback" element={<FeedbackPage />} />
+          <Route path="/feedbackStatus" element={<FeedbackStatus />} />
+          <Route path="/feedbackQuestion" element={<CreateSurvey />} />
+        </Routes>
+      </Router>
+    </>
   );
 };
 

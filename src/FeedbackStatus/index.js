@@ -71,7 +71,6 @@ const FeedbackStatus = () => {
 
   return (
     <>
-      <Navbar /> {/* Include the Navbar component */}
       <Card
         elevation={3}
         style={{ maxWidth: 400, margin: "0 auto", padding: 20 }}
