@@ -1,7 +1,7 @@
 // Button.js
 import React from "react";
 
-export const CustomButton = ({ onClick, children, disabled }) => {
+export const CustomButton = ({ onClick, children, disabled, style }) => {
   return (
     <button
       onClick={onClick}
@@ -15,6 +15,7 @@ export const CustomButton = ({ onClick, children, disabled }) => {
         borderRadius: "5px",
         cursor: "pointer",
         width: "100%",
+        ...style,
       }}
     >
       {children}
