@@ -4,7 +4,7 @@ import { roleOptions } from "./utils";
 import { DropdownInput } from "../components/DropdownInput";
 import { CustomButton } from "../components/CustomButton";
 import axios from "axios";
-
+import { useNavigate } from "react-router-dom";
 
 export const LoginPage = () => {
   const [username, setUsername] = useState("");
@@ -12,7 +12,7 @@ export const LoginPage = () => {
   const [role, setRole] = useState(roleOptions[0].value);
   const [responseData, setResponseData] = useState(null);
   const [error, setError] = useState(null);
-
+  const navigate = useNavigate();
   const fetchLoginData = async (username, password, userType) => {
     try {
       const response = await axios.get("http://localhost:8080/user/login", {
@@ -33,14 +33,17 @@ export const LoginPage = () => {
     try {
       const data = await fetchLoginData(username, password, role);
       setResponseData(data);
-      setError(null); // Clear any previous errors
+      setError(null);
 
-      // Check if the status is "success" or "failed" in the API response
       if (data.status === "success") {
-        // Display success message
+        if (responseData.user_type === roleOptions[0].value) {
+          navigate("/feedback");
+        } else {
+          navigate("/feedbackStatus");
+        }
+
         console.log("Login successful as", data.user_type);
       } else if (data.status === "failed") {
-        // Display failure message
         setError(`Login failed for ${data.user_type}`);
       }
     } catch (error) {
@@ -98,9 +101,9 @@ export const LoginPage = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <CustomButton onClick={handleLogin} disabled={!username || !password}>
-           Submit
+            Submit
           </CustomButton>
-          {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+
           {responseData && responseData.status === "success" && (
             <p style={{ color: "green", marginTop: "10px" }}>
               Login successful as {responseData.user_type}

@@ -9,7 +9,8 @@ export const DropdownInput = ({ options, value, onChange }) => {
       onChange={onChange}
       variant="outlined"
       style={{
-        padding: "10px",
+        paddingLeft: "3px",
+        paddingRight: "3px",
         margin: "5px",
         borderRadius: "5px",
         width: "220px",

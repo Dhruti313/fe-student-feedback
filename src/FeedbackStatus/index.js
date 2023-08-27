@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-
 import {
   Card,
   CardContent,
@@ -15,7 +14,7 @@ import {
   Select,
   MenuItem,
 } from "@mui/material";
-import "date-fns";
+import Navbar from "../Navbar"; // Import the Navbar component
 
 const StatusEnum = {
   0: { label: "Poor" },
@@ -71,69 +70,77 @@ const FeedbackStatus = () => {
   };
 
   return (
-    <Card
-      elevation={3}
-      style={{ maxWidth: 400, margin: "0 auto", padding: 20 }}
-    >
-      <CardContent>
-        <CardHeader title="Feedback Status" />
-        <Grid container spacing={2} justifyContent="center" alignItems="center">
-          <Grid item xs={12}>
-            <FormControl fullWidth variant="outlined">
-              <InputLabel>Select a Course</InputLabel>
-              <Select
-                value={selectedCourse}
-                onChange={(e) => setSelectedCourse(e.target.value)}
-                label="Select a Course"
-              >
-                <MenuItem value="">
-                  <em>None</em>
-                </MenuItem>
-                {courses.map((course) => (
-                  <MenuItem key={course.course_id} value={course.course_id}>
-                    {course.course_name}
+    <>
+      <Navbar /> {/* Include the Navbar component */}
+      <Card
+        elevation={3}
+        style={{ maxWidth: 400, margin: "0 auto", padding: 20 }}
+      >
+        <CardContent>
+          <CardHeader title="Feedback Status" />
+          <Grid
+            container
+            spacing={2}
+            justifyContent="center"
+            alignItems="center"
+          >
+            <Grid item xs={12}>
+              <FormControl fullWidth variant="outlined">
+                <InputLabel>Select a Course</InputLabel>
+                <Select
+                  value={selectedCourse}
+                  onChange={(e) => setSelectedCourse(e.target.value)}
+                  label="Select a Course"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
                   </MenuItem>
-                ))}
-              </Select>
-            </FormControl>
+                  {courses.map((course) => (
+                    <MenuItem key={course.course_id} value={course.course_id}>
+                      {course.course_name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Label>Start Date:</Label>
+              <DatePicker
+                selected={startTime}
+                onChange={(date) => setStartTime(date)}
+                dateFormat="yyyy-MM-dd"
+                className="date-picker"
+                style={{ width: "100%", padding: "10px", borderRadius: "5px" }}
+              />
+            </Grid>
+            <Grid item xs={12} sm={6}>
+              <Label>End Date:</Label>
+              <DatePicker
+                selected={endTime}
+                onChange={(date) => setEndTime(date)}
+                dateFormat="yyyy-MM-dd"
+                className="date-picker"
+                style={{ width: "100%", padding: "10px", borderRadius: "5px" }}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={12} sm={6}>
-            <Label>Start Date:</Label>
-            <DatePicker
-              selected={startTime}
-              onChange={(date) => setStartTime(date)}
-              dateFormat="yyyy-MM-dd"
-              className="date-picker"
-              style={{ width: "100%", padding: "10px", borderRadius: "5px" }}
-            />
-          </Grid>
-          <Grid item xs={12} sm={6}>
-            <Label>End Date:</Label>
-            <DatePicker
-              selected={endTime}
-              onChange={(date) => setEndTime(date)}
-              dateFormat="yyyy-MM-dd"
-              className="date-picker"
-              style={{ width: "100%", padding: "10px", borderRadius: "5px" }}
-            />
-          </Grid>
-        </Grid>
-        {error && <Typography color="error">{error}</Typography>}
-        {averageStatus !== null && (
-          <Typography variant="h6">
-            Average Status: {StatusEnum[averageStatus.toPrecision(1)].label}
-          </Typography>
-        )}
-        <Button
-          variant="contained"
-          color="primary"
-          onClick={handleCalculateAverage}
-          style={{ marginTop: "10px" }}
-        >
-          Calculate Average Status
-        </Button>
-      </CardContent>
-    </Card>
+          {error && <Typography color="error">{error}</Typography>}
+          {averageStatus !== null && (
+            <Typography variant="h6">
+              Average Status: {StatusEnum[averageStatus.toPrecision(1)].label}
+            </Typography>
+          )}
+          <Button
+            variant="contained"
+            color="primary"
+            onClick={handleCalculateAverage}
+            style={{ marginTop: "10px" }}
+          >
+            Calculate Average Status
+          </Button>
+        </CardContent>
+      </Card>
+    </>
   );
 };
 

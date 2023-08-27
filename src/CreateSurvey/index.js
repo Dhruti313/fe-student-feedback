@@ -13,6 +13,7 @@ import {
 } from "@mui/material";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
+import { useNavigate } from "react-router-dom";
 
 export const CreateSurvey = () => {
   const [courseName, setCourseName] = useState("");
@@ -21,6 +22,7 @@ export const CreateSurvey = () => {
   const [questions, setQuestions] = useState([]);
   const [newQuestion, setNewQuestion] = useState("");
   const [courses, setCourses] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchCourses();
@@ -40,6 +42,12 @@ export const CreateSurvey = () => {
       setQuestions([...questions, newQuestion]);
       setNewQuestion("");
     }
+  };
+
+  const handleDeleteQuestion = (index) => {
+    const updatedQuestions = [...questions];
+    updatedQuestions.splice(index, 1);
+    setQuestions(updatedQuestions);
   };
 
   const handleCreateSurvey = async () => {
@@ -65,22 +73,21 @@ export const CreateSurvey = () => {
         course_id: response.data.courseInfo.course_id,
         response: response.data.question.map((_, index) => ({
           question_id: index + 1,
-          status: "4",
+          status: "4", // Adjust status as needed
         })),
       };
 
       await axios.post("http://localhost:8080/student_feedback", feedbackData);
 
-      // Show success message
       alert("Survey created and feedback submitted successfully!");
-
-      // Redirect to /login page
-      window.location.href = "/login";
+      setCourseName("");
+      setStartTime(new Date());
+      setEndTime(new Date());
+      setQuestions([]);
+      setNewQuestion("");
+      navigate("/login");
     } catch (error) {
-      console.error("Error creating survey and submitting feedback:", error);
-      alert(
-        "An error occurred while creating the survey and submitting feedback."
-      );
+      navigate("/login");
     }
   };
 
@@ -121,7 +128,23 @@ export const CreateSurvey = () => {
           <div style={{ margin: "10px 0" }}>
             <Typography variant="h6">Questions:</Typography>
             {questions.map((q, index) => (
-              <Typography key={index}>{q}</Typography>
+              <div
+                key={index}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  marginBottom: 5,
+                }}
+              >
+                <Typography style={{ flex: 1 }}>{q}</Typography>
+                <Button
+                  variant="outlined"
+                  color="secondary"
+                  onClick={() => handleDeleteQuestion(index)}
+                >
+                  Delete
+                </Button>
+              </div>
             ))}
             <div style={{ display: "flex", marginTop: "10px" }}>
               <TextField

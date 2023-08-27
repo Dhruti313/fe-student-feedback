@@ -3,13 +3,14 @@ import axios from "axios";
 import { CustomButton } from "../components/CustomButton";
 import { Select, MenuItem, Typography, Card } from "@mui/material";
 import { StatusEnum } from "./utils";
+import { useNavigate } from "react-router-dom";
 
 export const FeedbackPage = () => {
   const [courses, setCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [questions, setQuestions] = useState([]);
   const [selectedStatuses, setSelectedStatuses] = useState([]);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const fetchCourses = async () => {
       try {
@@ -70,8 +71,10 @@ export const FeedbackPage = () => {
     try {
       await axios.post("http://localhost:8080/student_feedback", feedbackData);
       alert("Feedback submitted successfully!");
+      navigate("/login");
     } catch (error) {
       console.error("Error submitting feedback:", error);
+      navigate("/login");
       alert("An error occurred while submitting feedback.");
     }
   };
