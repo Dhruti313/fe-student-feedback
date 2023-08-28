@@ -17,10 +17,11 @@ import {
 import Navbar from "../Navbar"; // Import the Navbar component
 
 const StatusEnum = {
-  0: { label: "Poor" },
-  1: { label: "Good" },
-  2: { label: "Satisfactory" },
-  3: { label: "Excellent" },
+  null: { label: "null" },
+  1: { label: "Poor" },
+  2: { label: "Good" },
+  3: { label: "Satisfactory" },
+  4: { label: "Excellent" },
 };
 
 const Label = ({ children }) => (
@@ -126,7 +127,7 @@ const FeedbackStatus = () => {
           {error && <Typography color="error">{error}</Typography>}
           {averageStatus !== null && (
             <Typography variant="h6">
-              Average Status: {StatusEnum[averageStatus.toPrecision(1)].label}
+              Average Status: {StatusEnum[averageStatus.toPrecision(1)]?.label}
             </Typography>
           )}
           <Button
